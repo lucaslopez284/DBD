@@ -49,8 +49,8 @@ EXCEPT ( SELECT p2.nombreP, p2.descripcion, p2.precio, p2.stock
          FROM Producto p2 INNER JOIN Detalle d ON (p2.idProducto = d.idProducto)
                 INNER JOIN Factura f ON (d.nroTicket = f.nroTicket)
                 INNER JOIN Cliente c ON (f.idCliente = c.idCliente)
-         WHERE c.telefono = "221%")
-ORDER BY nombreP
+         WHERE c.telefono LIKE '221%')
+ORDER BY p.idProducto, p.nombreP, p.descripcion, p.precio, p.stock
 /*
 5. Listar para cada producto nombre, descripción, precio y cuantas veces fue vendido. Tenga en
 cuenta que puede no haberse vendido nunca el producto.
