@@ -11,12 +11,21 @@ Profesor-Curso = (DNI (fk), Cod_Curso (fk), Fecha_Desde, Fecha_Hasta?)
 1. Listar DNI, legajo y apellido y nombre de todos los alumnos que tengan año de ingreso inferior a
 2014.
 */
-
+SELECT a.DNI, a.Legajo, p.Apellido, p.Nombre
+FROM Alumno a
+INNER JOIN Persona p ON (a.DNI = p.DNI)
+WHERE a.Anio_Ingreso < 2014
 /*
 2. Listar DNI, matrícula, apellido y nombre de los profesores que dictan cursos que tengan más de
 100 horas de duración. Ordenar por DNI.
 */
-
+SELECT DISTINCT p.DNI, p.Matricula, per.Apellido, per.Nombre
+FROM Profesor p 
+INNER JOIN Persona per ON (p.DNI = per.DNI)
+INNER JOIN Profesor_Curso pc ON (p.DNI = pc.DNI)
+INNER JOIN Curso c ON(pc.Cod_Curso = c.Cod_Curso)
+WHERE c.Duracion > 100
+ORDER BY p.DNI
 /*
 3. Listar el DNI, Apellido, Nombre, Género y Fecha de nacimiento de los alumnos inscriptos al
 curso con nombre “Diseño de Bases de Datos” en 2023.
