@@ -108,7 +108,7 @@ VALUES (500002, 'Jorge Luis', 'Castor', 40578999, '221-4400789', '11 entre 500 y
 comprado el producto ´Z´.
 */
 
-SELECT f.nroTicket, f.total, f.hora
+SELECT f.nroTicket, f.total, , f.fecha, f.hora
 FROM Factura f
 INNER JOIN Cliente c ON (f.idCliente = c.idCliente)
 INNER JOIN Detalle d ON (f.nroTicket = d.nroTicket)
