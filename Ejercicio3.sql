@@ -64,6 +64,12 @@ HAVING COUNT(*)>5
 6. Listar nombre de escenario, ubicación y descripción de escenarios que solo tuvieron recitales
 con el género musical rock and roll. Ordenar por nombre de escenario
 */
+SELECT e.nombre_escenario, e.ubicacion, e.descripcion
+FROM Escenario e
+INNER JOIN Recital r ON (e.nroEscenario = r.nroEscenario)
+INNER JOIN Banda b ON (r.codigoB = b.codigoB)
+WHERE b.genero_musical = 'rock and roll'
+EXCEPT 
 
 /*
 7. Listar nombre, género musical y año de creación de bandas que hayan realizado recitales en

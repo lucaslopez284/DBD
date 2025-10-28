@@ -57,8 +57,13 @@ cuenta que puede no haberse vendido nunca el producto.
 */ 
 SELECT p.nombreP, p.descripcion, p.precio, COUNT(*) AS CantidadVendida
 FROM Producto p 
-INNER JOIN Detalle d ON (p.idProducto = d.idProducto)
-GROUP BY p.idProducto;
+LEFT JOIN Detalle d ON (p.idProducto = d.idProducto)
+GROUP BY p.idProducto, p.nombreP, p.descripcion, p.precio;
+
+SELECT p.nombreP, p.descripcion, p.precio, SUM(d.cantidad) AS CantidadVendida
+FROM Producto p 
+LEFT JOIN Detalle d ON (p.idProducto = d.idProducto)
+GROUP BY p.idProducto, p.nombreP, p.descripcion, p.precio;
 /*
 6. Listar nombre, apellido, DNI, teléfono y dirección de clientes que compraron los productos con
 nombre ‘prod1’ y ‘prod2’ pero nunca compraron el producto con nombre ‘prod3’.
