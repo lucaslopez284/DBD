@@ -55,7 +55,11 @@ WHERE e.nombre_escenario = 'Carlos Gardel'
 /*
 5. Reportar nombre, género musical y año de creación de bandas que tengan más de 5 integrantes.
 */
-
+SELECT b.nombreBanda, b.genero_musical, b.anio_creacion
+FROM Banda b
+INNER JOIN Integrante i ON (b.codigoB = i.codigoB)
+GROUP BY b.codigoB, b.nombreBanda, b.genero_musical, b.anio_creacion
+HAVING COUNT(*)>5
 /*
 6. Listar nombre de escenario, ubicación y descripción de escenarios que solo tuvieron recitales
 con el género musical rock and roll. Ordenar por nombre de escenario
