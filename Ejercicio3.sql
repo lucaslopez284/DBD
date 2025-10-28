@@ -70,16 +70,30 @@ INNER JOIN Recital r ON (e.nroEscenario = r.nroEscenario)
 INNER JOIN Banda b ON (r.codigoB = b.codigoB)
 WHERE b.genero_musical = 'rock and roll'
 EXCEPT 
-
+SELECT e.nombre_escenario, e.ubicacion, e.descripcion
+FROM Escenario e
+INNER JOIN Recital r ON (e.nroEscenario = r.nroEscenario)
+INNER JOIN Banda b ON (r.codigoB = b.codigoB)
+WHERE b.genero_musical <> 'rock and roll'
+ORDER BY nombre_escenario
 /*
 7. Listar nombre, género musical y año de creación de bandas que hayan realizado recitales en
 escenarios cubiertos durante 2023.// cubierto es true, false según corresponda
 */
-
+SELECT DISTINCT b.nombreBanda, b.genero_musical, b.anio_creacion
+FROM Banda b
+INNER JOIN Recital r ON (b.codigoB = r.codigoB)
+INNER JOIN Escenario e ON (r.nroEscenario = e.nroEscenario)
+WHERE e.cubierto = true
+AND r.fecha >= '2023-1-1' AND r.fecha >= '2023-1-1'
 /*
 8. Reportar para cada escenario, nombre del escenario y cantidad de recitales durante 2024.
 */
-
+SELECT e.nombre_escenario, COUNT(r.nroEscenario) AS CantRecitales2024
+FROM Escenario e
+LEFT JOIN Recital r ON (e.nroEscenario = r.nroEscenario) AND YEAR (r.fecha) = 2024
+GROUP BY e.nroEscenario, e.nombre_escenario
 /*
 9. Modificar el nombre de la banda ‘Mempis la Blusera’ a: ‘Memphis la Blusera’. 
 */
+UPDATE Banda SET nombreBanda = 'Memphis la Blusera' WHERE nombreBanda = 'Mempis la Blusera'
