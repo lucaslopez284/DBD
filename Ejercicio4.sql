@@ -76,7 +76,25 @@ GROUP BY p.DNI, per.Apellido, per.Nombre
 7. Listar Nombre y Descripción del curso que posea más alumnos inscriptos y del que posea
 menos alumnos inscriptos durante 2024.
 */
-
+SELECT c.Nombre, c.Descripcion, COUNT(*) as cant
+FROM Curso c
+INNER JOIN Alumno_Curso ac ON (c.Cod_Curso = ac.Cod_Curso)
+WHERE ac.Anio = 2024
+GROUP BY c.Cod_Curso, c.Nombre, c.Descripcion
+HAVING COUNT(*)>= ALL
+      (
+      SELECT COUNT(*) 
+      FROM Alumno_Curso ac 
+      WHERE ac.Anio = 2024
+      GROUP BY ac.Cod_Curso
+      )
+      OR COUNT(*)<= ALL 
+      (
+      SELECT COUNT(*) 
+      FROM Alumno_Curso ac 
+      WHERE ac.Anio = 2024
+      GROUP BY ac.Cod_Curso
+      )  
 /*
 8. Listar el DNI, Apellido, Nombre y Legajo de alumnos que realizaron cursos con nombre
 conteniendo el string ‘BD’ durante 2022 pero no realizaron ningún curso durante 2023.
