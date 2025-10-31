@@ -69,6 +69,17 @@ AND ciu.nombreCiudad = 'Villa Elisa'
 /*
 6. Listar nombre, apellido, dirección y teléfono de clientes que viajaron con todas las agencias.
 */
+SELECT cli.nombre, cli.apellido, cli.direccion, cli.telefono
+FROM Cliente cli 
+WHERE NOT EXISTS
+  (SELECT *
+   FROM Agencia a
+   WHERE NOT EXISTS
+     (SELECT * 
+      FROM Viaje v
+      INNER JOIN Cliente cli2 ON (v.dni = cli2.dni)
+      WHERE v.razon_social = a.razon_social
+      AND cli.dni = cli2.dni) )
 
 /*
 7. Modificar el cliente con DNI 38495444 actualizando el teléfono a ‘221-4400897’.
@@ -80,7 +91,14 @@ WHERE dni = 38495444
 8. Listar razón social, dirección y teléfono de la/s agencias que tengan mayor cantidad de viajes
 realizados.
 */
-
+SELECT a.razon_social, a.telef, a.direccion
+FROM Agencia a
+INNER JOIN Viaje v ON (a.razon_social = v.razon_social)
+GROUP BY a.razon_social, a.telef, a.direccion
+HAVING COUNT(*)>= ALL (
+       SELECT COUNT(*)
+       FROM Viaje v
+       GROUP BY v.razon_social)
 /*
 9. Reportar nombre, apellido, dirección y teléfono de clientes con al menos 5 viajes.
 */
