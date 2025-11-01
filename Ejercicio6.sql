@@ -62,7 +62,7 @@ GROUP BY rep.codRep, rep.nombre, rep.stock
 6. Listar nombre y especialidad del técnico con mayor cantidad de reparaciones realizadas y el
 técnico con menor cantidad de reparaciones.
 */
-SELECT t.nombre, t.especialidad, count(r.nroReparac)
+SELECT t.nombre, t.especialidad
 FROM Tecnico t
 LEFT JOIN Reparacion r ON (t.codTec = r.codTec)
 GROUP BY t.codTec, t.nombre, t.especialidad
